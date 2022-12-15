@@ -48,7 +48,7 @@ const Round = ({
         {cellList}
       </ul>
 
-      {roundWinner || draw &&
+      {(draw || roundWinner) &&
         <div className="buttons">
           <button onClick={startNewRound}>Play again</button>
           <button onClick={seeRecord}>See record</button>
