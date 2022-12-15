@@ -5,14 +5,15 @@ const Record = ({
   xWinsCount,
   oWinsCount,
   currentPlayer,
-  startNewRound
+  startNewRound,
+  draw
 }) => {
   const wins = currentPlayer === 'x' ? xWinsCount : oWinsCount,
     losses = currentPlayer === 'x' ? oWinsCount : xWinsCount;
 
   return (
     <>
-      <h2>{roundWinner} wins!</h2>
+      {!draw &&<h2>{roundWinner} wins!</h2>}
 
       <p>You have won {wins} times</p>
       <p>and lost {losses} times</p>

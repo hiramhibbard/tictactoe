@@ -14,7 +14,8 @@ export default function Game() {
     [roundWinner, setRoundWinner] = useState(null),
     [xWinsCount, updateXWinsCount] = useState(0),
     [oWinsCount, updateOWinsCount] = useState(0),
-    [lastWinner, setLastWinner] = useState(null);
+    [lastWinner, setLastWinner] = useState(null),
+    [draw, setDraw] = useState(false);
 
   const matchPlayer = player => {
     setCurrentPlayer(player);
@@ -49,12 +50,14 @@ export default function Game() {
     // The losing player goes first next round
     setCurrentPlayer(currentPlayer === 'x' ? 'o' : 'x');
     setRoundWinner(null);
+    setDraw(false);
     setStep('playing');
   }
 
   useEffect(() => {
     // This runs whenever a cell is clicked on. If a winner is found, the round ends.
     const checkWinCondition = () => {
+
       if (
         (cells[0] === currentPlayer && cells[1] === currentPlayer && cells[2] === currentPlayer) ||
         (cells[3] === currentPlayer && cells[4] === currentPlayer && cells[5] === currentPlayer) ||
@@ -66,15 +69,18 @@ export default function Game() {
         (cells[2] === currentPlayer && cells[4] === currentPlayer && cells[6] === currentPlayer)
       ) {
         setRoundWinner(currentPlayer);
-
+        
         // Increment the number of wins for the winning player to be displayed in the "Records" view
         if (currentPlayer === 'x') {
           updateXWinsCount(xWinsCount + 1);
         } else {
           updateOWinsCount(oWinsCount + 1);
         }
+      } else if (!cells.includes('')) {
+        // The game was a draw.
+        setDraw(true);
       } else {
-        // If no winner, switch to other player and continue the round
+        // If no winner and not a draw, switch to other player and continue the round
         setCurrentPlayer(currentPlayer === 'x' ? 'o' : 'x');
       }
       completeTurn(false);
@@ -112,6 +118,7 @@ export default function Game() {
           lastWinner={lastWinner}
           startNewRound={startNewRound}
           seeRecord={seeRecord}
+          draw={draw}
         />
       }
 
@@ -122,6 +129,7 @@ export default function Game() {
           oWinsCount={oWinsCount}
           currentPlayer={currentPlayer}
           startNewRound={startNewRound}
+          draw={draw}
         />
       }
 

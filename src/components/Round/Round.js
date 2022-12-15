@@ -8,7 +8,8 @@ const Round = ({
   roundWinner,
   lastWinner,
   startNewRound,
-  seeRecord
+  seeRecord,
+  draw
 }) => {
   const cellList = cells.map((cell, index) => {
     const handleClick = () => {
@@ -29,7 +30,11 @@ const Round = ({
 
   return (
     <>
-      <h2>
+      {draw
+        ?
+        <h2>It's a draw!</h2>
+        :
+        <h2>
         {roundWinner
           ?
           `${roundWinner} wins${lastWinner === roundWinner ? ` again` : ``} !`
@@ -37,12 +42,13 @@ const Round = ({
           `${currentPlayer}'s Turn!`
         }
       </h2>
+      }
 
       <ul className="cells">
         {cellList}
       </ul>
 
-      {roundWinner &&
+      {roundWinner || draw &&
         <div className="buttons">
           <button onClick={startNewRound}>Play again</button>
           <button onClick={seeRecord}>See record</button>
