@@ -1,13 +1,22 @@
 import React from 'react';
 import './Round.css'
 
-const Round = ({ currentPlayer, cells, handleUpdateCells, roundWinner, lastWinner, startNewRound, seeRecord }) => {
+const Round = ({
+  currentPlayer,
+  cells,
+  handleUpdateCells,
+  roundWinner,
+  lastWinner,
+  startNewRound,
+  seeRecord
+}) => {
   const cellList = cells.map((cell, index) => {
     const handleClick = () => {
       if (cell !== 'x' && cell !== 'o' && !roundWinner) {
         handleUpdateCells(index, currentPlayer);
       }
     }
+
     return (
       <li
         key={cell + index}

@@ -1,8 +1,15 @@
 import React from 'react';
 
-const Begin = ({ currentPlayer, matchPlayer, mainPlayer, setMainPlayer }) => {
+const Begin = ({
+  currentPlayer,
+  matchPlayer,
+  mainPlayer,
+  setMainPlayer
+}) => {
 
   const selectRandomPlayer = () => {
+    // The player who goes first is random in the first round.
+    // All subsequent rounds set the loser as the first player.
     matchPlayer(Math.random() < .5 ? 'x' : 'o');
   }
 

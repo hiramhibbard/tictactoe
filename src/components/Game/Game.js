@@ -7,14 +7,14 @@ import Record from '../Record/Record';
 export default function Game() {
   const initialCells = ['', '', '', '', '', '', '', '', ''];
   const [mainPlayer, setMainPlayer] = useState(null),
-        [currentPlayer, setCurrentPlayer] = useState(null),
-        [step, setStep] = useState('begin'),
-        [cells, updateCells] = useState(initialCells),
-        [turnComplete, completeTurn] = useState(false),
-        [roundWinner, setRoundWinner] = useState(null),
-        [xWinsCount, updateXWinsCount] = useState(0),
-        [oWinsCount, updateOWinsCount] = useState(0),
-        [lastWinner, setLastWinner] = useState(null);
+    [currentPlayer, setCurrentPlayer] = useState(null),
+    [step, setStep] = useState('begin'),
+    [cells, updateCells] = useState(initialCells),
+    [turnComplete, completeTurn] = useState(false),
+    [roundWinner, setRoundWinner] = useState(null),
+    [xWinsCount, updateXWinsCount] = useState(0),
+    [oWinsCount, updateOWinsCount] = useState(0),
+    [lastWinner, setLastWinner] = useState(null);
 
   const matchPlayer = player => {
     setCurrentPlayer(player);
@@ -36,19 +36,24 @@ export default function Game() {
       };
       return item;
     })
+    // Replace the cells array with the updated array
     updateCells(nextCells);
+    // This gives the useEffect something to check so it only runs at the end of a turn
     completeTurn(true);
   }
 
   const startNewRound = () => {
     setLastWinner(roundWinner);
+    // Empty all cells
     updateCells(initialCells);
+    // The losing player goes first next round
     setCurrentPlayer(currentPlayer === 'x' ? 'o' : 'x');
     setRoundWinner(null);
     setStep('playing');
   }
 
   useEffect(() => {
+    // This runs whenever a cell is clicked on. If a winner is found, the round ends.
     const checkWinCondition = () => {
       if (
         (cells[0] === currentPlayer && cells[1] === currentPlayer && cells[2] === currentPlayer) ||
@@ -61,12 +66,15 @@ export default function Game() {
         (cells[2] === currentPlayer && cells[4] === currentPlayer && cells[6] === currentPlayer)
       ) {
         setRoundWinner(currentPlayer);
+
+        // Increment the number of wins for the winning player to be displayed in the "Records" view
         if (currentPlayer === 'x') {
           updateXWinsCount(xWinsCount + 1);
         } else {
           updateOWinsCount(oWinsCount + 1);
         }
       } else {
+        // If no winner, switch to other player and continue the round
         setCurrentPlayer(currentPlayer === 'x' ? 'o' : 'x');
       }
       completeTurn(false);
