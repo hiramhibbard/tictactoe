@@ -1,0 +1,32 @@
+.cells {
+  display: flex;
+  flex-wrap: wrap;
+  width: 250px;
+  list-style: none;
+}
+
+.cells li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-right: 5px solid #7E7E7E;
+  border-bottom: 5px solid #7E7E7E;
+  cursor: pointer;
+  font-family: 'Baskerville', serif;
+  font-size: 48px;
+  text-transform: uppercase;
+}
+
+.cells li:nth-child(3),
+.cells li:nth-child(6),
+.cells li:nth-child(9) {
+  border-right: none;
+}
+
+.cells li:nth-child(7),
+.cells li:nth-child(8),
+.cells li:nth-child(9) {
+  border-bottom: none;
+}
